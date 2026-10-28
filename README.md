@@ -60,6 +60,19 @@ Or download the repo as `.zip` (GitHub Code button → Download ZIP, or grab it 
 
 Note: voice profiles do not persist across Claude.ai web sessions. `/voice-profiler` writes the profile to `/mnt/user-data/outputs/voice-profile.md` — download it locally, then re-upload it at the start of each session where you want `/humanize` to use it. The SKILL.md handles the path resolution automatically.
 
+## Voice Profile connector (Claude.ai / Claude Desktop)
+
+Optional, self-hosted. `supabase/functions/voice-profile-mcp` is a small remote MCP server that stores your voice profile so chats load it automatically instead of you re-uploading `voice-profile.md` every session. It exposes `get_voice_profile`, `save_voice_profile` and `list_voice_profiles`; the skills use them when the connector is present and fall back to file uploads when it isn't.
+
+Setup on your own Supabase project:
+
+1. Apply `supabase/migrations/*_voice_profile_connector.sql`.
+2. Deploy the function with JWT verification off (it does its own auth): `supabase functions deploy voice-profile-mcp --no-verify-jwt`.
+3. Generate a token (`openssl rand -hex 32`) and insert its SHA-256 hex into `public.connector_tokens`.
+4. In Claude: **Settings → Connectors → Add custom connector**, URL `https://<project-ref>.supabase.co/functions/v1/voice-profile-mcp/<token>`.
+
+The token in the URL is the only credential, so treat the URL like a password. To revoke it, delete its row from `connector_tokens`.
+
 ## Build your voice profile
 
 This is the step that matters. Without it, `/humanize` produces generic-human text. With it, it produces YOUR-human text.

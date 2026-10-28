@@ -72,7 +72,12 @@ Where to write the profile depends on the surface — pick the right one and tel
 - Write to `~/.claude/voice-profile.md`
 - Tell the user: "Voice profile saved to `~/.claude/voice-profile.md`. `/humanize-kit:humanize` will load it automatically every session."
 
-**Claude.ai web / Claude Desktop:**
+**Claude.ai web / Claude Desktop, Voice Profile connector connected** (a `save_voice_profile` tool is available — preferred):
+- Call `save_voice_profile` with the full profile Markdown as `content`
+- Also write a copy to `/mnt/user-data/outputs/voice-profile.md` as a downloadable backup
+- Tell the user: "Voice profile saved to your Voice Profile connector. `/humanize-kit:humanize` and `/humanize-kit:humanize-ig` will load it automatically in every chat — nothing to upload."
+
+**Claude.ai web / Claude Desktop, no connector:**
 - Write to `/mnt/user-data/outputs/voice-profile.md`
 - Tell the user: "Voice profile saved to `/mnt/user-data/outputs/voice-profile.md`. **Download it now and save it locally** — Claude.ai web doesn't persist files across sessions, so you'll need to re-upload it (via the file-attach UI) at the start of each session where you want to use `/humanize-kit:humanize`. Once uploaded, it lands in `/mnt/user-data/uploads/voice-profile.md` and the humanize skills auto-find it."
 
@@ -166,7 +171,7 @@ version: 1.0
 ## After Generation
 
 1. Write the file to the surface-appropriate path (see "Output: The Voice Profile File" section above for the dual-surface paths).
-2. Tell the user where it was saved and what they need to do next (Claude Code: nothing — it auto-loads. Claude.ai web: download + re-upload next session).
+2. Tell the user where it was saved and what they need to do next (Claude Code or Claude.ai with the connector: nothing — it auto-loads. Claude.ai web without the connector: download + re-upload next session).
 3. Offer: "Want to test it? Paste any AI-generated text and I'll run `/humanize-kit:humanize` using your new profile."
 4. Offer: "Want to add platform-specific overrides? (LinkedIn voice, email voice, Instagram voice)"
 
@@ -185,7 +190,7 @@ This replaces excess em dashes with your natural punctuation devices (stdlib-onl
 
 ## Updating an Existing Profile
 
-If a voice profile already exists at the surface-appropriate path:
+If a voice profile already exists at the surface-appropriate path (on Claude.ai with the connector, check with `get_voice_profile`):
 1. Read it first
 2. Ask: "You already have a voice profile. Want to update it with new samples, or start fresh?"
 3. If updating: merge new observations with existing profile, keeping what still fits
