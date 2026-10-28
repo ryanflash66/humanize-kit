@@ -18,7 +18,7 @@ This is the Instagram-specific sibling of `/humanize`. Same pattern-interrupter 
 Before rewriting, check for a voice profile. Lookup paths depend on the surface:
 
 - **Claude Code (plugin install):** `~/.claude/voice-profile.md`, then `./voice-profile.md` as fallback
-- **Claude.ai web / Claude Desktop:** `/mnt/user-data/uploads/voice-profile.md`, then `/home/claude/voice-profile.md` as fallback
+- **Claude.ai web / Claude Desktop:** if the **Voice Profile connector** is connected (a `get_voice_profile` tool is available), call `get_voice_profile` first. If it isn't available or has nothing saved, fall back to `/mnt/user-data/uploads/voice-profile.md`, then `/home/claude/voice-profile.md`
 
 If found, load any Instagram-specific overrides from the "Platform Overrides" section. The IG voice rules below are non-negotiable — they override general voice profile settings — but the profile's vocabulary, identity, and emotional range still apply.
 

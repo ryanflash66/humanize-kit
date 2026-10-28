@@ -23,9 +23,10 @@ Before rewriting, load the user's voice profile. The lookup paths depend on the 
 3. If still not found, tell the user: "No voice profile found at `~/.claude/voice-profile.md`. Run `/humanize-kit:voice-profiler` first to build it, or create the file manually."
 
 **Claude.ai web / Claude Desktop:**
-1. Check `/mnt/user-data/uploads/voice-profile.md` (the user uploads it at session start)
-2. If not found, check `/home/claude/voice-profile.md` (if the user dropped it inline)
-3. If still not found, tell the user: "No voice profile found. Upload your `voice-profile.md` via the file-attach UI (it'll land in `/mnt/user-data/uploads/`), or run `/humanize-kit:voice-profiler` to build one — voice-profiler will write it to `/mnt/user-data/outputs/` so you can download it for next session."
+1. If the **Voice Profile connector** is connected (a `get_voice_profile` tool is available), call `get_voice_profile` and use what it returns. This is the default on Claude.ai: the profile persists across chats with nothing to upload.
+2. If the connector isn't available or has no profile saved, check `/mnt/user-data/uploads/voice-profile.md` (the user uploads it at session start)
+3. If not found, check `/home/claude/voice-profile.md` (if the user dropped it inline)
+4. If still not found, tell the user: "No voice profile found. Run `/humanize-kit:voice-profiler` to build one — with the Voice Profile connector enabled it saves automatically for every future chat. Otherwise upload your `voice-profile.md` via the file-attach UI."
 
 Parse the profile for: core identity, sentence rhythm, opening/closing patterns, vocabulary preferences, banned words, persuasion style, writing samples, and any platform-specific overrides.
 
