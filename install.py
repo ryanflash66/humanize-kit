@@ -452,41 +452,14 @@ def generate_and_install(profile, samples):
 
 
 # ---------------------------------------------------------------------------
-# Step 5 — Email Capture
+# Step 5 — Outro
 # ---------------------------------------------------------------------------
 
-def email_capture():
+def outro():
     print()
     print('You now own a profile of how you write. Not how AI thinks you should')
     print('write. Not how LinkedIn thinks you should write. How you actually write.')
     print('Keep it weird.')
-    print()
-
-    notify = prompt('Detection patterns shift as models update. Want to get notified when we update the pattern list? [y/N]: ')
-    if notify.lower() != 'y':
-        return
-
-    name = prompt('Name: ')
-    email = prompt('Email: ')
-
-    if not email:
-        print('  No email provided. Skipping.')
-        return
-
-    try:
-        import urllib.request
-        data = json.dumps({'name': name, 'email': email}).encode('utf-8')
-        req = urllib.request.Request(
-            'https://hrgmzofvfrbxjhwjtbrc.supabase.co/functions/v1/humanize-signup',
-            data=data,
-            headers={'Content-Type': 'application/json'},
-            method='POST',
-        )
-        urllib.request.urlopen(req, timeout=10)
-        print('  Signed up. We\'ll keep you posted.')
-    except Exception:
-        print('  Could not reach signup server.')
-        print('  Email hello@brandedmayhem.com to sign up manually.')
     print()
 
 
@@ -526,7 +499,7 @@ def main():
     samples = collect_samples()
     profile = analyze_and_review(samples)
     generate_and_install(profile, samples)
-    email_capture()
+    outro()
     done()
 
 
