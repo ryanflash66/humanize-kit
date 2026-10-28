@@ -31,8 +31,8 @@ Detection tools catch it too. Pangram, GPTZero, Copyleaks - they're keying on st
 **Claude Code (plugin — recommended):**
 
 ```text
-/plugin marketplace add Branded-Mayhem-Collective-LLC/humanize-kit
-/plugin install humanize-kit@bmc-humanize-kit
+/plugin marketplace add ryanflash66/humanize-kit
+/plugin install humanize-kit@ryan-humanize-kit
 ```
 
 Skills land namespaced as `/humanize-kit:humanize`, `/humanize-kit:humanize-ig`, and `/humanize-kit:voice-profiler`. A session-start hook will warn you if `~/.claude/voice-profile.md` doesn't exist yet so you know the next step.
